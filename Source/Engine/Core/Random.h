@@ -29,6 +29,6 @@ namespace viper {
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		inline int getRandomFloat() { return (float)rand() / RAND_MAX; }
+		inline float getRandomFloat() { return (float)rand() / RAND_MAX; }
 	}
 }
