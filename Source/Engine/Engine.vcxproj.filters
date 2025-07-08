@@ -12,6 +12,9 @@
     <Filter Include="Source\Core">
       <UniqueIdentifier>{b228185b-b735-4d2b-bf82-70bf54cab7e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{402f17a5-1717-4814-857b-f3fb13a65483}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -22,11 +25,11 @@
     <ClInclude Include="Core\Random.h">
       <Filter>Source\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Math.h">
-      <Filter>Source\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Time.h">
       <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Math.h">
+      <Filter>Source\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
