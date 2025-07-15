@@ -83,6 +83,16 @@ int main(int argc, char* argv[]) {
 
     audio->playSound(sound, 0, false, nullptr);
 
+    std::vector<FMOD::Sound*> sounds;
+    audio->createSound("bass.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("snare.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("cowbell.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+    
     std::vector<viper::vec2> points;
 
     // MAIN LOOP
@@ -107,10 +117,10 @@ int main(int argc, char* argv[]) {
         }*/
 
         // No space Check
-        if (input.GetMouseButtonDown(viper::InputSystem::MouseButton::Left)) {
+        /*if (input.GetMouseButtonDown(viper::InputSystem::MouseButton::Left)) {
             points.push_back(input.GetMousePosition());
             
-        }
+        }*/
 
         
         // 10 pixel check
@@ -121,9 +131,18 @@ int main(int argc, char* argv[]) {
 
         }
 
-        
+        if (input.GetKeyDown(SDL_SCANCODE_Q) && !input.GetPreviousKeyDown(SDL_SCANCODE_Q)) {
+            audio->playSound(sounds[0], 0, false, nullptr);
+        }
 
-        
+        if (input.GetKeyDown(SDL_SCANCODE_W) && !input.GetPreviousKeyDown(SDL_SCANCODE_W)) {
+            audio->playSound(sounds[1], 0, false, nullptr);
+        }
+
+        if (input.GetKeyDown(SDL_SCANCODE_E) && !input.GetPreviousKeyDown(SDL_SCANCODE_E)) {
+            audio->playSound(sounds[2], 0, false, nullptr);
+        }
+
         /*viper::vec2 mouse = input.GetMousePosition();
         std::cout << mouse.x << " " << mouse.y << std::endl;*/
 
