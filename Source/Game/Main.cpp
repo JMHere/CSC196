@@ -4,9 +4,8 @@
 #include "Core/Time.h"
 #include <Renderer.h>
 #include "Input/InputSystem.h"
+#include "Audio/AudioSystem.h"
 
-#include <fmod.hpp>
-#include <SDL3/SDL.h>
 #include <iostream>
 #include <vector>
 
@@ -27,11 +26,15 @@ int main(int argc, char* argv[]) {
     input.Initialize();
 
     // create audio system
-    FMOD::System* audio;
-    FMOD::System_Create(&audio);
+    viper::AudioSystem audio;
+    audio.Initialize();
 
-    void* extradriverdata = nullptr;
-    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
+    // initialize sounds
+    audio.AddSound("bass.wav", "bass");
+    audio.AddSound("snare.wav", "snare");
+    audio.AddSound("clap.wav", "clap");
+    audio.AddSound("close-hat.wav", "close-hat");
+    audio.AddSound("open-hat.wav", "open-hat");
 
     SDL_Event e;
     bool quit = false;
@@ -78,21 +81,6 @@ int main(int argc, char* argv[]) {
         point.y = viper::random::getRandomInt(SCREEN_HEIGHT);
 	}*/
 
-    FMOD::Sound* sound = nullptr;
-    audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);
-
-    audio->playSound(sound, 0, false, nullptr);
-
-    std::vector<FMOD::Sound*> sounds;
-    audio->createSound("bass.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-
-    audio->createSound("snare.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-
-    audio->createSound("cowbell.wav", FMOD_DEFAULT, 0, &sound);
-    sounds.push_back(sound);
-    
     std::vector<viper::vec2> points;
 
     // MAIN LOOP
@@ -104,8 +92,9 @@ int main(int argc, char* argv[]) {
             }
         }
         // update engine systems
+        audio.Update();
         input.Update();
-        audio->update();
+        
 
         // get input
         /*if (input.GetKeyReleased(SDL_SCANCODE_A)) {
@@ -132,15 +121,23 @@ int main(int argc, char* argv[]) {
         }
 
         if (input.GetKeyDown(SDL_SCANCODE_Q) && !input.GetPreviousKeyDown(SDL_SCANCODE_Q)) {
-            audio->playSound(sounds[0], 0, false, nullptr);
+            audio.PlaySound("bass");
         }
 
         if (input.GetKeyDown(SDL_SCANCODE_W) && !input.GetPreviousKeyDown(SDL_SCANCODE_W)) {
-            audio->playSound(sounds[1], 0, false, nullptr);
+            audio.PlaySound("snare");
         }
 
         if (input.GetKeyDown(SDL_SCANCODE_E) && !input.GetPreviousKeyDown(SDL_SCANCODE_E)) {
-            audio->playSound(sounds[2], 0, false, nullptr);
+            audio.PlaySound("clap");
+        }
+
+        if (input.GetKeyDown(SDL_SCANCODE_R) && !input.GetPreviousKeyDown(SDL_SCANCODE_W)) {
+            audio.PlaySound("close-hat");
+        }
+
+        if (input.GetKeyDown(SDL_SCANCODE_T) && !input.GetPreviousKeyDown(SDL_SCANCODE_E)) {
+            audio.PlaySound("open-hat");
         }
 
         /*viper::vec2 mouse = input.GetMousePosition();
@@ -197,6 +194,7 @@ int main(int argc, char* argv[]) {
     }
 
     renderer.Shutdown();
+    audio.Shutdown();
 
     return 0;
 }
