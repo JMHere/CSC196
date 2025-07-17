@@ -6,7 +6,10 @@ namespace viper {
 	template<typename T>
 	struct Vector3 {
 
-		T x, y;
+		union {
+			struct { T x, y, z; };
+			struct { T r, g, b; };
+		};
 
 		Vector3() = default;
 		Vector3(T x, T y, T z) : x{ x }, y{ y }, z{ z } {}

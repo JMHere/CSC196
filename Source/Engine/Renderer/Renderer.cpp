@@ -44,6 +44,11 @@ namespace viper {
         SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
     }
 
+    void Renderer::SetColor(float r, float g, float b, float a)
+    {
+        SDL_SetRenderDrawColorFloat(m_renderer, r, g, b, a);
+    }
+
     void Renderer::DrawLine(float x1, float y1, float x2, float y2)
     {
         SDL_RenderLine(m_renderer, x1, y1, x2, y2);
